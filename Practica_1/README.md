@@ -1,5 +1,3 @@
-# Robótica Móvil
-
 # Práctica 1
 
 Este proyecto implementa un algoritmo de exploración autónoma para un robot simulado. 
