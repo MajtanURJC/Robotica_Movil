@@ -54,8 +54,21 @@ Si el robot detecta un choque:
 3. Después avanza recto (estado 3) y vuelve a la espiral.
 
 Esto garantiza que el robot no se quede atascado ni repita siempre la misma trayectoria.
+Además, al girar 180 grados nos aseguramos que al ir hacia alante si choca el bumper lo detecte, cosa que si fuese hacía
+atras no pasaría, asegurandonos así no perder la reactividad.
 
 ---
+## Video corto demostración
+
+<a href="https://drive.google.com/file/d/1kHfPza1fUvgygHTrDiIwXL82aY1b6ggA/view?usp=sharing">
+  <img 
+    width="1717" 
+    height="837" 
+    alt="Captura desde 2025-10-04 13-57-45" 
+    src="https://github.com/user-attachments/assets/45d01a2e-8ee5-40f7-a3b6-adb0e205cfb1" 
+    style="cursor: pointer;"
+  />
+</a>
 
 ## Posibles Mejoras
 
