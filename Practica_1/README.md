@@ -76,6 +76,7 @@ atras no pasaría, asegurandonos así no perder la reactividad.
 * Incorporar sensores adicionales (infrarrojos, ultrasonidos, láser) para evitar colisiones sin necesidad de contacto.
 * Implementar mapeo del entorno para recordar zonas ya exploradas.
 * Ajustar dinámicamente la espiral para cubrir áreas de manera más eficiente.
+* Poner una velocidad máxima para evitar que llegue a velocidades demasiado altas.
 
 ---
 
