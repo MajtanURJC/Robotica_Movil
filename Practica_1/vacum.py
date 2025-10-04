@@ -1,4 +1,3 @@
-Recuerda ahora este:
 import WebGUI
 import HAL
 import Frequency
