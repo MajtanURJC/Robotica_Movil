@@ -81,7 +81,7 @@ atras no pasaría, asegurandonos así no perder la reactividad.
 
 ## Conclusión
 
-Este algoritmo permite que un robot simulado explore su entorno mediante un patrón de espiral creciente, evitando colisiones gracias a un giro de 180° y añadiendo variabilidad con movimientos rectos aleatorios. 
+Este algoritmo permite que un robot simulado explore su entorno mediante un patrón de espiral creciente, evitando colisiones gracias a un giro de 180°, evitando perder la reactividad y añadiendo variabilidad con movimientos rectos aleatorios. 
 Es una base sencilla pero efectiva para robots exploradores, aspiradores o de búsqueda en entornos controlados.
 
 ---
