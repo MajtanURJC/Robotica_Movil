@@ -1,7 +1,7 @@
 # Práctica 1
 
-Este proyecto implementa un algoritmo de exploración autónoma para un robot simulado. 
-El robot combina un movimiento en **espiral creciente** con rutinas de evasión al detectar colisiones mediante su sensor bumper.
+Este proyecto implementa un algoritmo de exploración autónoma para un robot aspiradora. 
+El robot combina un movimiento en ESPIRAL CRECIENTE con tecnicas de evasion al detectar colisiones mediante el bumper.
 
 La lógica está programada en Python usando los módulos `WebGUI`, `HAL` y `Frequency`.
 
@@ -11,7 +11,7 @@ La lógica está programada en Python usando los módulos `WebGUI`, `HAL` y `Fre
 
 El robot sigue un ciclo de **tres estados principales**:
 
-1. **Avanzar en espiral (State 1)**
+1. **Girar en espiral (State 1)**
 
    * El robot avanza hacia adelante mientras describe una espiral creciente.
    * La velocidad lineal (`V_FORWARD`) aumenta poco a poco en cada ciclo gracias a `INC_FACTOR`.
@@ -20,15 +20,15 @@ El robot sigue un ciclo de **tres estados principales**:
 2. **Girar 180° (State 2)**
 
    * Si el bumper detecta un choque, el robot gira sobre su eje aproximadamente 180 grados.
-   * El tiempo de giro (`TURN_180_TIME`) se calcula en función de `TURN_SPEED` y se multiplica por un factor aleatorio (`0.7–1.3`) para evitar trayectorias repetitivas.
+   * El tiempo de giro (`TURN_180_TIME`) se calcula en función de `TURN_SPEED` y se multiplica por un factor aleatorio (`0.7–1.3`) para evitar trayectorias repetitivas y   al ir hacia delante evitar perder la reactividad para poder detectar choques en cualquier momento.
 
 3. **Avanzar recto un tiempo aleatorio (State 3)**
 
-   * Tras el giro, el robot avanza recto con una velocidad más alta (`V_FORWARD = 0.7`).
-   * Este avance dura un tiempo aleatorio (`FORWARD_TIME`) entre 2 y 6 segundos.
+   * Tras el giro, el robot avanza recto con una velocidad diferente (`V_FORWARD = 0.7`).
+   * Este avance dura un tiempo aleatorio (`FORWARD_TIME`) entre 2 y 6 segundos para poder cambiar de zonas.
    * Después, vuelve al movimiento en espiral.
 
-El ciclo se repite indefinidamente, lo que permite cubrir más área y evitar atascos.
+El ciclo se repite indefinidamente, lo que permite cubrir más área y evitar atascos, y sobre todo, evitar perder la reactividad.
 
 ---
 
@@ -80,7 +80,7 @@ atras no pasaría, asegurandonos así no perder la reactividad.
 
 ## Conclusión
 
-Este algoritmo permite que un robot simulado explore su entorno mediante un patrón de espiral creciente, evitando colisiones gracias a un giro de 180°, evitando perder la reactividad y añadiendo variabilidad con movimientos rectos aleatorios. 
+Este algoritmo permite que un robot aspiradora limpie mediante un patrón de espiral creciente, evitando colisiones no controladas gracias a un giro de 180°, evitando perder la reactividad y añadiendo variabilidad con movimientos rectos aleatorios. 
 Es una base sencilla pero efectiva para robots exploradores, aspiradores o de búsqueda en entornos controlados.
 
 ---
