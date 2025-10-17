@@ -1,6 +1,6 @@
 # Práctica – Seguimiento de Línea Roja (Follow Line)
 
-Este proyecto implementa un **controlador PID** para un coche autónomo.  
+Este proyecto implementa un **controlador PID** para un coche autónomo en el entorno de simulación de [Robotics Academy](https://jderobot.github.io/RoboticsAcademy/exercises/AutonomousCars/follow_line/).  
 El objetivo es que el vehículo siga una **línea roja** en el suelo de manera estable, ajustando su **velocidad lineal** y su **orientación angular** de forma automática mediante visión por computador.
 
 La lógica está programada en **Python**, utilizando los módulos `HAL`, `WebGUI`, `Frequency`, `cv2` y `numpy`.
@@ -49,15 +49,76 @@ El robot realiza un bucle de control continuo con los siguientes pasos:
 
 ---
 
+## 🖼️ Captura y Procesamiento de la Imagen
+
+El módulo `HAL` (Hardware Abstraction Layer) permite acceder a los sensores del simulador, entre ellos la **cámara frontal** del coche.
+
+### 🔹 Captura
+
+La imagen se obtiene en formato **BGR (OpenCV)** con:
+```python
+img = HAL.getImage()
+````
+
+Después se obtienen sus dimensiones:
+
+```python
+height, width, _ = img.shape
+```
+
+Para reducir el ruido visual y centrarse en la línea, se procesa **solo la mitad inferior**:
+
+```python
+lower_half = img[height//2 : height, 0 : width]
+```
+
+### 🔹 Conversión de color y detección de línea
+
+1. Se convierte la imagen de **BGR a HSV** (Hue, Saturation, Value):
+
+   ```python
+   hsv = cv2.cvtColor(lower_half, cv2.COLOR_BGR2HSV)
+   ```
+
+2. Se definen dos rangos de color para detectar el **rojo**:
+
+   ```python
+   lower_red1 = np.array([0, 100, 100])
+   upper_red1 = np.array([10, 255, 255])
+   lower_red2 = np.array([160, 100, 100])
+   upper_red2 = np.array([179, 255, 255])
+   ```
+
+3. Se combinan ambas máscaras:
+
+   ```python
+   mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+   mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+   mask = cv2.bitwise_or(mask1, mask2)
+   ```
+
+4. Se calculan los **momentos de la imagen** para obtener el **centroide** de la línea:
+
+   ```python
+   M = cv2.moments(mask)
+   if M["m00"] > 0:
+       cx = int(M["m10"] / M["m00"])
+       cy = int(M["m01"] / M["m00"])
+   ```
+
+El punto `(cx, cy)` representa la posición de la línea roja en la imagen, y es el que se usa como referencia para calcular el error del controlador PID.
+
+---
+
 ## Parámetros Principales
 
-| Tipo de Control | Kp | Ki | Kd |
-|------------------|----|----|----|
-| Angular (w) | 0.009 | 0.000015 | 0.0075 |
-| Lineal (v) | 0.03 | 0.000015 | 0.015 |
+| Tipo de Control | Kp    | Ki       | Kd     |
+| --------------- | ----- | -------- | ------ |
+| Angular (w)     | 0.009 | 0.000015 | 0.0075 |
+| Lineal (v)      | 0.03  | 0.000015 | 0.015  |
 
-* `Vmax = 11.0` → Velocidad máxima permitida.  
-* `Vmin = 3.0` → Velocidad mínima de seguridad.  
+* `Vmax = 11.0` → Velocidad máxima permitida.
+* `Vmin = 3.0` → Velocidad mínima de seguridad.
 
 Estos parámetros fueron ajustados experimentalmente para conseguir una respuesta estable y sin oscilaciones.
 
@@ -65,7 +126,7 @@ Estos parámetros fueron ajustados experimentalmente para conseguir una respuest
 
 ## Lógica de Prioridad
 
-La prioridad principal es **mantener la línea dentro del campo de visión**.  
+La prioridad principal es **mantener la línea dentro del campo de visión**.
 Si la línea no se detecta:
 
 1. Se cancela cualquier control PID activo.
@@ -102,9 +163,8 @@ Esto garantiza que el vehículo pueda **relocalizar la trayectoria** sin comport
 
 ## Conclusión
 
-Este proyecto demuestra el uso de **controladores PID** aplicados al seguimiento de trayectorias mediante **visión por computador**.  
-El coche es capaz de seguir una línea roja con precisión, adaptando su velocidad y orientación de forma automática.  
+Este proyecto demuestra el uso de **controladores PID** aplicados al seguimiento de trayectorias mediante **visión por computador**.
+El coche es capaz de seguir una línea roja con precisión, adaptando su velocidad y orientación de forma automática.
 Es un ejercicio ideal para comprender los fundamentos del **control en robótica móvil** y el uso de **procesamiento de imagen en tiempo real**.
 
----
 
