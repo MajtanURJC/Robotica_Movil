@@ -124,19 +124,6 @@ Estos parámetros fueron ajustados experimentalmente para conseguir una respuest
 
 ---
 
-## Lógica de Prioridad
-
-La prioridad principal es **mantener la línea dentro del campo de visión**.
-Si la línea no se detecta:
-
-1. Se cancela cualquier control PID activo.
-2. El coche gira lentamente sobre su eje para intentar recuperarla.
-3. Se resetean los acumuladores integrales para evitar errores al retomar el control.
-
-Esto garantiza que el vehículo pueda **relocalizar la trayectoria** sin comportamientos erráticos.
-
----
-
 ## Video corto demostración
 
 <a href="https://jderobot.github.io/RoboticsAcademy/exercises/AutonomousCars/follow_line/">
