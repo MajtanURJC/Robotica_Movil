@@ -1,7 +1,7 @@
 # Práctica – Seguimiento de Línea Roja (Follow Line)
 
 Este proyecto implementa un **controlador PID** para un coche autónomo en el entorno de simulación de [Robotics Academy](https://jderobot.github.io/RoboticsAcademy/exercises/AutonomousCars/follow_line/).  
-El objetivo es que el vehículo siga una **línea roja** en el suelo de manera estable, ajustando su **velocidad lineal** y su **orientación angular** de forma automática mediante visión por computador.
+El objetivo es que el vehículo siga una **línea roja** en el suelo de manera estable, ajustando su **velocidad lineal** y su **orientación angular** mediante un controlador.
 
 La lógica está programada en **Python**, utilizando los módulos `HAL`, `WebGUI`, `Frequency`, `cv2` y `numpy`.
 
@@ -60,13 +60,13 @@ La imagen se obtiene en formato **BGR (OpenCV)** con:
 img = HAL.getImage()
 ````
 
-Después se obtienen sus dimensiones:
+Después se obtienen sus dimensiones para después procesar solo la parte que nos interesa:
 
 ```python
 height, width, _ = img.shape
 ```
 
-Para reducir el ruido visual y centrarse en la línea, se procesa **solo la mitad inferior**:
+Para reducir el ruido visual y centrarse en la línea, se procesa solo la mitad inferior:
 
 ```python
 lower_half = img[height//2 : height, 0 : width]
@@ -74,7 +74,7 @@ lower_half = img[height//2 : height, 0 : width]
 
 ### 🔹 Conversión de color y detección de línea
 
-1. Se convierte la imagen de **BGR a HSV** (Hue, Saturation, Value):
+1. Se convierte la imagen de **BGR a HSV**:
 
    ```python
    hsv = cv2.cvtColor(lower_half, cv2.COLOR_BGR2HSV)
@@ -106,7 +106,7 @@ lower_half = img[height//2 : height, 0 : width]
        cy = int(M["m01"] / M["m00"])
    ```
 
-El punto `(cx, cy)` representa la posición de la línea roja en la imagen, y es el que se usa como referencia para calcular el error del controlador PID.
+El punto cx representa la posición horizontal de la línea roja en la imagen, y es el que se usa como referencia para calcular el error del controlador.
 
 ---
 
@@ -150,8 +150,6 @@ Estos parámetros fueron ajustados experimentalmente para conseguir una respuest
 
 ## Conclusión
 
-Este proyecto demuestra el uso de **controladores PID** aplicados al seguimiento de trayectorias mediante **visión por computador**.
-El coche es capaz de seguir una línea roja con precisión, adaptando su velocidad y orientación de forma automática.
-Es un ejercicio ideal para comprender los fundamentos del **control en robótica móvil** y el uso de **procesamiento de imagen en tiempo real**.
-
+Este proyecto demuestra el uso de **controladores PID** aplicados al seguimiento de trayectorias.
+El coche es capaz de seguir una línea roja, adaptando su velocidad y orientación mediante un controlador.
 
