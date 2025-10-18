@@ -117,7 +117,7 @@ El punto cx representa la posición horizontal de la línea roja en la imagen, y
 | Angular (w)     | 0.009 | 0.000015 | 0.0075 |
 | Lineal (v)      | 0.03  | 0.000015 | 0.015  |
 
-* `Vmax = 11.0` → Velocidad máxima permitida.
+* `Vmax = 10.0` → Velocidad máxima permitida.
 * `Vmin = 3.0` → Velocidad mínima de seguridad.
 
 Estos parámetros fueron ajustados experimentalmente para conseguir una respuesta estable y sin oscilaciones.
