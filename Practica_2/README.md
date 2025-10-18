@@ -1,7 +1,7 @@
 # Práctica – Seguimiento de Línea Roja (Follow Line)
 
 Este proyecto implementa un **controlador PID** para un coche autónomo en el entorno de simulación de [Robotics Academy](https://jderobot.github.io/RoboticsAcademy/exercises/AutonomousCars/follow_line/).  
-El objetivo es que el vehículo siga una **línea roja** en el suelo de manera estable, ajustando su **velocidad lineal** y su **orientación angular** mediante un controlador.
+El objetivo es que el vehículo siga una **línea roja** en el suelo de manera estable y sin sobreoscilar, ajustando su **velocidad lineal** y su **orientación angular** mediante un controlador.
 
 La lógica está programada en **Python**, utilizando los módulos `HAL`, `WebGUI`, `Frequency`, `cv2` y `numpy`.
 
