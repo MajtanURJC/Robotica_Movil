@@ -49,11 +49,11 @@ El robot realiza un bucle de control continuo con los siguientes pasos:
 
 ---
 
-## 🖼️ Captura y Procesamiento de la Imagen
+## Captura y Procesamiento de la Imagen
 
 El módulo `HAL` (Hardware Abstraction Layer) permite acceder a los sensores del simulador, entre ellos la **cámara frontal** del coche.
 
-### 🔹 Captura
+### Captura
 
 La imagen se obtiene en formato **BGR (OpenCV)** con:
 ```python
@@ -72,7 +72,7 @@ Para reducir el ruido visual y centrarse en la línea, se procesa solo la mitad 
 lower_half = img[height//2 : height, 0 : width]
 ```
 
-### 🔹 Conversión de color y detección de línea
+### Conversión de color y detección de línea
 
 1. Se convierte la imagen de **BGR a HSV**:
 
