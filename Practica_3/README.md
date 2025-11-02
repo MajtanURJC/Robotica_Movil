@@ -1,7 +1,3 @@
-Perfecto, aquí tienes el README para la práctica de **Navegación Local con VFF** siguiendo el mismo modelo que el ejemplo que me proporcionaste:
-
----
-
 # Práctica – Navegación Local con Campos de Fuerza Virtual (VFF)
 
 Este proyecto implementa un algoritmo de Campos de Fuerza Virtual (VFF) para un coche autónomo.
