@@ -93,10 +93,10 @@ def compute_repulsion_simple(laser_polar, laser_xy, influence=1.5, k=1.0):
 
 El módulo `WebGUI` permite mostrar en tiempo real:
 
-* **Fuerza del objetivo:** verde
-* **Fuerza de obstáculos:** rojo
-* **Fuerza resultante:** negro
-* **Posición del objetivo:** azul
+* Fuerza del objetivo: verde
+* Fuerza de obstáculos: rojo
+* Fuerza resultante: negro
+
 
 ```python
 WebGUI.showForces([x_rel, y_rel], [rep_x, rep_y], [avg_x, avg_y])
