@@ -117,5 +117,5 @@ WebGUI.showLocalTarget((tx, ty))
 
 ## Conclusión
 
-Este proyecto demuestra la implementación de un algoritmo de **navegación local basado en Campos de Fuerza Virtual**.
+Este proyecto demuestra la implementación de un algoritmo de navegación local basado en VFF.
 El robot puede moverse hacia un objetivo, evitando obstáculos, sumando vectores de atracción y repulsión, y ajustando sus velocidades lineal y angular de manera segura y eficiente.
