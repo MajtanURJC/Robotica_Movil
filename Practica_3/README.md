@@ -105,6 +105,12 @@ WebGUI.showLocalTarget((tx, ty))
 
 ---
 
+## Problemas a corregir
+
+* En algunos coches se pasa mucho rato calculando la trayectoria ya que el objetivo está justo delante del coche,
+  pero al final caba pasando.
+* A veces el coche toma la ruta más pequeña en vez de pasar por la más amplia.
+
 ## Posibles Mejoras
 
 * Implementar manejo de **obstáculos en movimiento**.
