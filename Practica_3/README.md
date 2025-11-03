@@ -43,7 +43,7 @@ El robot ejecuta un bucle de control continuo que sigue estos pasos:
 
      ```python
      w = max(-1.5, min(1.5, desired_angle))
-     v = 0.6 * max(0.0, min(1.2, forward_component))
+     v = max(0.0, min(10, avg_x))
      HAL.setV(v)
      HAL.setW(w)
      ```
