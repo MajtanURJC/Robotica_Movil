@@ -5,7 +5,7 @@ Este proyecto desarrolla un sistema de navegación local basado en el método de
 El propósito es que el coche alcance puntos objetivo intermedios (subgoals) evitando colisiones, combinando vectores de atracción y repulsión para determinar una trayectoria segura y eficiente.
 
 ---
-
+holiiii
 ## Descripción del Comportamiento
 
 El robot ejecuta un bucle de control continuo que sigue estos pasos:
