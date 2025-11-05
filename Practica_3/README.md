@@ -105,6 +105,8 @@ WebGUI.showLocalTarget((tx, ty))
 
 https://drive.google.com/file/d/1SbFnBCwSAHzE-8nxBXhlqlSYcgCJe22Q/view?usp=sharing
 
+---
+
 ## Problemas Detectados
 
 * En algunos casos, el coche tarda en planificar la trayectoria cuando el objetivo está justo frente a él, aunque finalmente lo logra.
