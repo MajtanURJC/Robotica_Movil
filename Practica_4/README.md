@@ -1,7 +1,3 @@
-Aquí tienes tu **README** con el **mismo estilo, estructura y tono** que el ejemplo que proporcionaste, pero adaptado a tu proyecto de **Navegación Global con Wavefront + Inflado de Obstáculos**.
-
----
-
 # Práctica – Navegación Global mediante Wavefront BFS e Inflado de Obstáculos
 
 Este proyecto implementa un sistema de navegación global basado en el algoritmo **Wavefront**, una técnica incluida dentro del método de **Gradient Path Planning (GPP)**.
