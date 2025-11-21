@@ -3,13 +3,11 @@
 Este proyecto implementa un sistema de navegación global basado en el algoritmo **Wavefront**, una técnica incluida dentro del método de **Gradient Path Planning (GPP)**.
 El objetivo es que el robot alcance el destino seleccionado en el mapa siguiendo el gradiente descendente del campo de potencial, mientras evita colisiones gracias a un inflado artificial de los obstáculos.
 
----
 
 ## Descripción del Comportamiento
 
 El robot ejecuta un bucle de control continuo que sigue estos pasos:
 
----
 
 ### 1. **Carga del mapa y preprocesado**
 
@@ -30,16 +28,12 @@ El robot ejecuta un bucle de control continuo que sigue estos pasos:
 
 Esto reduce trayectorias peligrosamente cercanas a las paredes.
 
----
-
 ### 2. **Selección del destino**
 
 * El usuario marca un punto en el mapa mediante la interfaz gráfica (`WebGUI.getTargetPose()`).
 * El destino se convierte a coordenadas de la rejilla usando `WebGUI.rowColumn()`.
 
 Cuando el destino cambia, se recalcula el campo de potencial.
-
----
 
 ### 3. **Cálculo del campo Wavefront BFS**
 
@@ -56,8 +50,6 @@ Características principales:
 * Las celdas infladas reciben un valor muy alto para desalentar su uso.
 * El resultado es un mapa de potencial que forma un “camino en pendiente” hacia el destino.
 
----
-
 ### 4. **Selección del siguiente movimiento**
 
 El robot busca, entre sus vecinos, aquellos cuya distancia potencial sea menor que la actual.
@@ -70,8 +62,6 @@ if val != -1 and val < mejor_val:
 ```
 
 El vector elegido representa la dirección deseada de avance.
-
----
 
 ### 5. **Conversión a velocidades**
 
@@ -88,8 +78,6 @@ HAL.setW(error_angle)
 
 El robot avanza siempre “colina abajo” dentro del campo de potencial.
 
----
-
 ### 6. **Detección de llegada al destino**
 
 Cuando el robot está suficientemente cerca del objetivo, se detiene:
@@ -99,8 +87,6 @@ if abs(robot_r - goal_r) <= 2:
     HAL.setV(0)
     HAL.setW(0)
 ```
-
----
 
 ## Inflado de Obstáculos
 
@@ -114,7 +100,6 @@ for dr in range(-radio, radio + 1):
 
 Esto produce rutas más suaves y evita que el robot roce esquinas o pasillos estrechos.
 
----
 
 ## Visualización
 
@@ -129,7 +114,6 @@ La imagen resultante muestra:
 * Celdas oscuras → zonas de alto coste (obstáculos inflados)
 * Celdas claras → camino óptimo hacia el destino
 
----
 
 ## Problemas Detectados
 
@@ -137,7 +121,6 @@ La imagen resultante muestra:
 * En ocasiones, si el robot inicia fuera del campo BFS recalculado, pierde referencia hasta que se genera un nuevo destino.
 * Algunos pasillos muy estrechos pueden quedar bloqueados debido al inflado de obstáculos y no poder seguir girando.
 
----
 
 ## Posibles Mejoras
 
