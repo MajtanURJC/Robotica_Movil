@@ -1,6 +1,6 @@
-# Práctica – Navegación Global mediante Wavefront BFS e Inflado de Obstáculos
+# Práctica – Navegación Global mediante Wavefront BFS
 
-Este proyecto implementa un sistema de navegación global basado en el algoritmo **Wavefront**, una técnica incluida dentro del método de **Gradient Path Planning (GPP)**.
+Este proyecto implementa un sistema de navegación global basado en el algoritmo Wavefront, una técnica incluida dentro del método de Gradient Path Planning (GPP).
 El objetivo es que el robot alcance el destino seleccionado en el mapa siguiendo el gradiente descendente del campo de potencial, mientras evita colisiones gracias a un inflado artificial de los obstáculos.
 
 
