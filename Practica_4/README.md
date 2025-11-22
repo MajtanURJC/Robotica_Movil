@@ -52,7 +52,8 @@ Características principales:
 * El resultado es un mapa de potencial con el cual se llegará hasta el objetivo.
 
 Se hace siguiendo estos pasos del guión:
-<img width="821" height="394" alt="image" src="https://github.com/user-attachments/assets/5bc0f9a3-655c-434b-834a-d506da0c3e10" />
+
+<img width="421" height="197" alt="image" src="https://github.com/user-attachments/assets/5bc0f9a3-655c-434b-834a-d506da0c3e10" />
 
 
 ### 4. **Selección del siguiente movimiento**
