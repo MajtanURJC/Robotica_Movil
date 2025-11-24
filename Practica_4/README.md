@@ -1,4 +1,4 @@
-# Práctica – Navegación Global mediante descenso de gradiante con ackerman
+# Práctica – Navegación Global mediante descenso de gradiante con coche modelo ackerman
 
 Este proyecto implementa un sistema de navegación global basado en el descenso de gradiante.
 El objetivo es que el robot alcance el destino seleccionado en el mapa siguiendo el gradiente descendente del campo de potencial, mientras evita colisiones gracias a un inflado artificial de los obstáculos.
