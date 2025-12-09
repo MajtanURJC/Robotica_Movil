@@ -160,8 +160,7 @@ La matriz generada tiene tres tipos de celdas:
 
 ## Posibles Mejoras
 
-* **Integrar SLAM** (GMapping, Hector SLAM, Karto…)
-  Evitaría errores acumulados y permitiría usar solo odometría.
+* **Integrar SLAM** (GMapping, Hector SLAM, Karto…). Evitaría errores acumulados y permitiría usar solo odometría.
 
 
 * **Fusión de sensores**
