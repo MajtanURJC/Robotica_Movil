@@ -170,21 +170,21 @@ sustituyendolo por la linea anterior:
 
 
 ```python
-odom = HAL.getOdom()
-rx, ry, ryaw = odom.x, odom.y, odom.yaw
+pose = HAL.getOdom()
+rx, ry, ryaw = pose.x, pose.y, pose.yaw
 ```
 
 y para probar con odom2 u odom3 cambiando solo la primera linea de estos modos:
 
 
 ```python
-odom = HAL.getOdom2()
-rx, ry, ryaw = odom.x, odom.y, odom.yaw
+pose = HAL.getOdom2()
+rx, ry, ryaw = pose.x, pose.y, pose.yaw
 ```
 
 ```python
 odom = HAL.getOdom3()
-rx, ry, ryaw = odom.x, odom.y, odom.yaw
+rx, ry, ryaw = pose.x, pose.y, pose.yaw
 ```
 
 
