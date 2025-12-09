@@ -157,6 +157,35 @@ La matriz generada tiene tres tipos de celdas:
 * **0 (negro)** → Zona libre por donde ha pasado un rayo
 * **127 (gris)** → Aún no explorado
 
+## Odometría
+
+Como el entorno nos da el siguiente metodo para calcular la posición que no tiene ruido ni nada no se usa odometria:
+
+```python
+HAL.getPose3d()
+```
+
+pero si se quisiese añadir odometría ademas de tal y como está comentado en el código se usarían estas funciones 
+sustituyendolo por la linea anterior:
+
+
+```python
+odom = HAL.getOdom()
+rx, ry, ryaw = odom.x, odom.y, odom.yaw
+```
+
+y para probar con odom2 u odom 3 cambiando solo la primera linea de estos modos:
+
+
+```python
+odom = HAL.getOdom2()
+rx, ry, ryaw = odom.x, odom.y, odom.yaw
+```
+
+```python
+odom = HAL.getOdom3()
+rx, ry, ryaw = odom.x, odom.y, odom.yaw
+```
 
 
 ## Posibles Mejoras
