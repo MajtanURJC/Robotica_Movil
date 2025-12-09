@@ -1,6 +1,7 @@
 # Práctica 5 – Laser Mapping
 
 Esta practica implementa un sistema básico de mapeado láser mediante una estrategia de exploración aleatoria y construcción de un grid de ocupación a partir de los datos del sensor LIDAR.
+
 El objetivo es que el robot recorra autónomamente un almacén mientras genera un mapa de los obstáculos presentes en el entorno.
 
 La práctica se basa estrictamente en convertir las mediciones del láser a coordenadas en el mapa y rellenar una matriz que represente zonas libres, ocupadas o desconocidas.
