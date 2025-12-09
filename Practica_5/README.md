@@ -174,7 +174,7 @@ odom = HAL.getOdom()
 rx, ry, ryaw = odom.x, odom.y, odom.yaw
 ```
 
-y para probar con odom2 u odom 3 cambiando solo la primera linea de estos modos:
+y para probar con odom2 u odom3 cambiando solo la primera linea de estos modos:
 
 
 ```python
