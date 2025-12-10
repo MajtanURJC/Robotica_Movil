@@ -28,8 +28,8 @@ user_map = np.full((MAP_H, MAP_W), UNKNOWN, dtype=np.uint8)
 Valores usados:
 
 * `UNKNOWN = 127` → celdas no exploradas
-* `FREE = 0` → espacio libre
-* `OCCUPIED = 255` → obstáculo detectado
+* `FREE = 255` → espacio libre
+* `OCCUPIED = 0` → obstáculo detectado
 
 El mapa se envía a la GUI con:
 
