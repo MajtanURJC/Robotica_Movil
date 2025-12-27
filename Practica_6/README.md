@@ -131,18 +131,6 @@ dist_coeffs = np.zeros((4, 1))
 
 Estos parámetros permiten proyectar puntos 3D del mundo a coordenadas 2D de la imagen y son esenciales para la estimación precisa de la pose.
 
-# Teoría
-
-AprilTags: marcadores fiduciales robustos que permiten:
-
-Alta fiabilidad de detección.
-
-Resistencia a ruido, oclusión parcial y distorsión perspectiva.
-
-Fácil decodificación para obtener el ID y posición conocida del tag.
-
-PnP (Perspective-n-Point): permite estimar la pose del robot a partir de correspondencias 3D-2D entre los puntos del tag y la imagen.
-
 # Posibles Mejoras
 
 - Integrar fusión odometría + visión para mayor precisión.
