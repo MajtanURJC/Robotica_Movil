@@ -11,7 +11,7 @@ El robot se representa en tres formas:
 
 - Rojo: posición estimada por el usuario.
 
-#Descripción del Comportamiento
+# Descripción del Comportamiento
 
 El sistema ejecuta un bucle continuo con dos tareas principales:
 
