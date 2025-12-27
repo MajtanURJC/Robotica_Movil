@@ -30,9 +30,11 @@ import cv2, HAL, WebGUI, pyapriltags, Frequency, numpy as np, yaml, math
 
 Se inicializa el detector de AprilTags:
 
+´´´ python
 detector = pyapriltags.Detector(searchpath=["apriltags"], families="tag36h11")
 TAG_SIZE = 0.24
 half = TAG_SIZE / 2
+´´´
 
 
 Se definen los puntos 3D de cada tag:
