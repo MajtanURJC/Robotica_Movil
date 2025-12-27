@@ -1,4 +1,4 @@
-#Marker Based Visual Localization
+# Marker Based Visual Localization
 
 Esta práctica implementa un sistema de localización visual de un robot en un entorno 2D mediante la detección de marcadores visuales (AprilTags).
 El objetivo es estimar la pose (posición y orientación) del robot usando visión por computadora y métodos matemáticos para relacionar las etiquetas detectadas con sus posiciones conocidas en el mundo.
@@ -127,7 +127,7 @@ dist_coeffs = np.zeros((4, 1))
 
 Estos parámetros permiten proyectar puntos 3D del mundo a coordenadas 2D de la imagen y son esenciales para la estimación precisa de la pose.
 
-Teoría
+# Teoría
 
 AprilTags: marcadores fiduciales robustos que permiten:
 
@@ -139,7 +139,7 @@ Fácil decodificación para obtener el ID y posición conocida del tag.
 
 PnP (Perspective-n-Point): permite estimar la pose del robot a partir de correspondencias 3D-2D entre los puntos del tag y la imagen.
 
-#Posibles Mejoras
+# Posibles Mejoras
 
 Integrar fusión odometría + visión para mayor precisión.
 
