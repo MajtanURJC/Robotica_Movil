@@ -21,7 +21,7 @@ Visualización de la pose estimada y control del robot
 
 A continuación se detallan las etapas más relevantes.
 
-1. Inicialización y configuración
+## Inicialización y configuración
 
 Se importan las librerías necesarias y se configuran los parámetros:
 
@@ -50,7 +50,7 @@ Se cargan las posiciones conocidas de los tags desde un archivo YAML:
 conf = yaml.safe_load(Path("/resources/exercises/marker_visual_loc/apriltags_poses.yaml").read_text())
 tags_world = conf["tags"]
 
-2. Obtención de imágenes y datos del robot
+## Obtención de imágenes y datos del robot
 
 En cada iteración:
 
@@ -70,7 +70,7 @@ Se utiliza la GUI para mostrar imágenes y la pose estimada:
 WebGUI.showImage(image)
 WebGUI.showEstimatedPose((x, y, yaw_robot))
 
-3. Detección de AprilTags
+## Detección de AprilTags
 
 Se detectan los tags en la imagen:
 
@@ -87,7 +87,7 @@ Se calcula la pose del tag respecto a la cámara usando solvePnP:
 
 success, rvec, tvec = cv2.solvePnP(tag_object_points, image_points, camera_matrix, dist_coeffs)
 
-4. Transformaciones y estimación de pose del robot
+## Transformaciones y estimación de pose del robot
 
 Se construyen las matrices de transformación para convertir:
 
@@ -103,7 +103,7 @@ world2robot = np.dot(np.dot(world2tag, cam2tag), cam2robot)
 x, y = world2robot[0, 3], world2robot[1, 3]
 yaw_robot = math.atan2(world2robot[1, 0], world2robot[0, 0]) + math.pi / 2
 
-5. Visualización y control
+## Visualización y control
 
 El sistema actualiza continuamente:
 
@@ -113,7 +113,7 @@ Pose estimada del robot en el mapa.
 
 Velocidad lineal y angular del robot.
 
-6. Cámara y calibración
+## Cámara y calibración
 
 Se utiliza un modelo de cámara pinhole con parámetros intrínsecos:
 
