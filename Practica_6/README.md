@@ -145,10 +145,10 @@ PnP (Perspective-n-Point): permite estimar la pose del robot a partir de corresp
 
 # Posibles Mejoras
 
-Integrar fusión odometría + visión para mayor precisión.
+- Integrar fusión odometría + visión para mayor precisión.
 
-Uso de filtros de Kalman o SLAM visual para suavizar la estimación de pose.
+- Uso de filtros de Kalman o SLAM visual para suavizar la estimación de pose.
 
-Optimización de la detección de AprilTags con GPU o procesamiento paralelo.
+- Optimización de la detección de AprilTags con GPU o procesamiento paralelo.
 
-Ajuste dinámico de la frecuencia de ejecución según la carga de procesamiento.
+- Ajuste dinámico de la frecuencia de ejecución según la carga de procesamiento.
