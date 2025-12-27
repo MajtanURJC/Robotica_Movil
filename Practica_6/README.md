@@ -30,11 +30,11 @@ import cv2, HAL, WebGUI, pyapriltags, Frequency, numpy as np, yaml, math
 
 Se inicializa el detector de AprilTags:
 
-´´´ python
+```python
 detector = pyapriltags.Detector(searchpath=["apriltags"], families="tag36h11")
 TAG_SIZE = 0.24
 half = TAG_SIZE / 2
-´´´
+```
 
 
 Se definen los puntos 3D de cada tag:
@@ -55,11 +55,11 @@ tags_world = conf["tags"]
 ## Obtención de imágenes y datos del robot
 
 En cada iteración:
-
+```python
 Frequency.tick(20)
 image = HAL.getImage()
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
+```
 
 Se usan funciones del HAL para controlar la velocidad del robot:
 
@@ -69,15 +69,17 @@ HAL.setW(0.2)
 
 Se utiliza la GUI para mostrar imágenes y la pose estimada:
 
+```python
 WebGUI.showImage(image)
 WebGUI.showEstimatedPose((x, y, yaw_robot))
+```
 
 ## Detección de AprilTags
 
 Se detectan los tags en la imagen:
-
+```python
 results = detector.detect(gray)
-
+```
 
 Para cada tag detectado:
 
@@ -86,9 +88,9 @@ Se dibuja la caja delimitadora y el centro del tag en la imagen.
 Se extrae el ID del tag para relacionarlo con su posición conocida.
 
 Se calcula la pose del tag respecto a la cámara usando solvePnP:
-
+```python
 success, rvec, tvec = cv2.solvePnP(tag_object_points, image_points, camera_matrix, dist_coeffs)
-
+```
 ## Transformaciones y estimación de pose del robot
 
 Se construyen las matrices de transformación para convertir:
@@ -100,11 +102,11 @@ cámara → robot
 mundo → tag
 
 Se combinan para obtener la pose del robot en el mundo:
-
+```python
 world2robot = np.dot(np.dot(world2tag, cam2tag), cam2robot)
 x, y = world2robot[0, 3], world2robot[1, 3]
 yaw_robot = math.atan2(world2robot[1, 0], world2robot[0, 0]) + math.pi / 2
-
+```
 ## Visualización y control
 
 El sistema actualiza continuamente:
@@ -118,14 +120,14 @@ Velocidad lineal y angular del robot.
 ## Cámara y calibración
 
 Se utiliza un modelo de cámara pinhole con parámetros intrínsecos:
-
+```python
 camera_matrix = np.array([
     [focal, 0, cx],
     [0, focal, cy],
     [0, 0, 1]
 ], dtype=np.float64)
 dist_coeffs = np.zeros((4, 1))
-
+```
 
 Estos parámetros permiten proyectar puntos 3D del mundo a coordenadas 2D de la imagen y son esenciales para la estimación precisa de la pose.
 
