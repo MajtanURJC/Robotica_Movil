@@ -5,11 +5,11 @@ El objetivo es estimar la pose (posición y orientación) del robot usando visi�
 
 El robot se representa en tres formas:
 
--Verde: posición real.
+- Verde: posición real.
 
--Azul: posición según odometría (con ruido).
+- Azul: posición según odometría (con ruido).
 
--Rojo: posición estimada por el usuario.
+- Rojo: posición estimada por el usuario.
 
 #Descripción del Comportamiento
 
