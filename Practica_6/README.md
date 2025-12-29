@@ -1,143 +1,149 @@
 # Marker Based Visual Localization
 
-Esta práctica implementa un sistema de localización visual de un robot en un entorno 2D mediante la detección de marcadores visuales (AprilTags).
-El objetivo es estimar la pose (posición y orientación) del robot usando visión por computadora y métodos matemáticos para relacionar las etiquetas detectadas con sus posiciones conocidas en el mundo.
+Esta práctica implementa un sistema de **localización visual y navegación autónoma** de un robot móvil en un entorno 2D mediante la detección de marcadores visuales (AprilTags).  
+
+El sistema estima la pose del robot usando visión por computador y utiliza dicha información para **moverse de forma autónoma**, buscando activamente nuevos marcadores.  
 
 El robot se representa en tres formas:
 
-- Verde: posición real.
+- **Verde**: posición real
+- **Azul**: posición según odometría (con ruido)
+- **Rojo**: posición estimada mediante visión
 
-- Azul: posición según odometría (con ruido).
+## Descripción del Comportamiento
 
-- Rojo: posición estimada por el usuario.
+El sistema ejecuta un bucle continuo que integra **localización y navegación** en cada iteración.  
+Tareas principales:
 
-# Descripción del Comportamiento
+1. Detección de AprilTags y estimación de pose global
+2. Navegación autónoma basada en visión
+3. Visualización del estado del robot y del entorno
 
-El sistema ejecuta un bucle continuo con dos tareas principales:
+Ambos procesos se realizan **simultáneamente usando la misma observación visual**.
 
-Detección de AprilTags y estimación de pose
-
-Visualización de la pose estimada y control del robot
-
-A continuación se detallan las etapas más relevantes.
 
 ## Inicialización y configuración
 
 Se importan las librerías necesarias y se configuran los parámetros:
 
-import cv2, HAL, WebGUI, pyapriltags, Frequency, numpy as np, yaml, math
+```python
+import cv2, HAL, WebGUI, pyapriltags, Frequency, numpy as np, yaml
 
-
-Se inicializa el detector de AprilTags:
+Se inicializa el detector de AprilTags y se define el tamaño de los marcadores:
 
 ```python
-detector = pyapriltags.Detector(searchpath=["apriltags"], families="tag36h11")
+detector = pyapriltags.Detector(families="tag36h11")
 TAG_SIZE = 0.24
-half = TAG_SIZE / 2
+tag_object_points = ...  # puntos 3D del tag
+tags_world = yaml.safe_load("apriltags_poses.yaml")
 ```
 
+## Obtención de imágenes y ciclo de ejecución
 
-Se definen los puntos 3D de cada tag:
+El robot captura imágenes de la cámara, detecta tags, estima la pose y decide el movimiento en un bucle a frecuencia fija:
 
-tag_object_points = np.array([
-    [-half,  half, 0.0],
-    [ half,  half, 0.0],
-    [ half, -half, 0.0],
-    [-half, -half, 0.0],
-], dtype=np.float32)
-
-
-Se cargan las posiciones conocidas de los tags desde un archivo YAML:
-
-conf = yaml.safe_load(Path("/resources/exercises/marker_visual_loc/apriltags_poses.yaml").read_text())
-tags_world = conf["tags"]
-
-## Obtención de imágenes y datos del robot
-
-En cada iteración:
 ```python
 Frequency.tick(20)
 image = HAL.getImage()
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+results = detector.detect(gray)
 ```
 
-Se usan funciones del HAL para controlar la velocidad del robot:
 
-HAL.setV(0.1)
-HAL.setW(0.2)
+## Detección y visualización de AprilTags
+
+Para cada tag detectado:
+
+* Se dibuja su contorno y centro en la imagen.
+* Se muestra su identificador (`tag_id`).
+* Se calcula la pose relativa a la cámara.
+
+**Todos los tags visibles se dibujan en pantalla**, aunque solo uno se use para navegación.
+
+```python
+for tag in results:
+    dibujar(tag)
+    if es_mas_cercano(tag):
+        tag_seleccionado = tag
+```
+
+## Selección del tag de referencia
+
+Se selecciona **un único tag por iteración** para:
+
+* Navegación
+* Estimación de pose global
+
+Criterio de selección: "el tag más cercano a la cámara", garantizando estabilidad y coherencia.
 
 
-Se utiliza la GUI para mostrar imágenes y la pose estimada:
+## Transformaciones y estimación de pose del robot
+
+Se calculan las transformaciones:
+
+1. Tag → cámara
+2. Cámara → robot
+3. Mundo → tag
+
+Combinando estas matrices se obtiene la pose global:
+
+```python
+world2robot = world2tag @ cam2tag @ cam2robot
+x, y, yaw_robot = world2robot[0,3], world2robot[1,3], atan2(...)
+WebGUI.showEstimatedPose((x, y, yaw_robot))
+```
+
+## Navegación autónoma basada en visión
+
+El robot implementa un **comportamiento reactivo** guiado por los AprilTags:
+
+* **Si no hay tags visibles**: gira explorando.
+* **Si detecta un tag**: se orienta hacia él y avanza hasta una distancia mínima.
+* **Cuando llega cerca**: deja de avanzar y gira para buscar otro tag.
+
+```python
+if tag_visible:
+    v, w = calcular_velocidad(tag)
+else:
+    v, w = 0, exploracion_giro
+HAL.setV(v)
+HAL.setW(w)
+```
+
+
+## Visualización y control
+
+Se actualiza continuamente:
+
+* Imagen de la cámara con todos los tags detectados.
+* Pose estimada del robot en el mapa.
+* Movimiento del robot en el entorno.
 
 ```python
 WebGUI.showImage(image)
 WebGUI.showEstimatedPose((x, y, yaw_robot))
 ```
 
-## Detección de AprilTags
-
-Se detectan los tags en la imagen:
-```python
-results = detector.detect(gray)
-```
-
-Para cada tag detectado:
-
-- Se dibuja la caja delimitadora y el centro del tag en la imagen.
-
-- Se extrae el ID del tag para relacionarlo con su posición conocida.
-
-- Se calcula la pose del tag respecto a la cámara usando solvePnP:
-    ```python
-    success, rvec, tvec = cv2.solvePnP(tag_object_points, image_points, camera_matrix, dist_coeffs)
-    ```
-    ## Transformaciones y estimación de pose del robot
-
-Se construyen las matrices de transformación para convertir:
-
-- 1.tag → cámara
-
-- 2.cámara → robot
-
-- 3.mundo → tag
-
-Se combinan para obtener la pose del robot en el mundo:
-```python
-world2robot = np.dot(np.dot(world2tag, cam2tag), cam2robot)
-x, y = world2robot[0, 3], world2robot[1, 3]
-yaw_robot = math.atan2(world2robot[1, 0], world2robot[0, 0]) + math.pi / 2
-```
-## Visualización y control
-
-El sistema actualiza continuamente:
-
-- Imagen con los tags detectados.
-
-- Pose estimada del robot en el mapa.
-
-- Velocidad lineal y angular del robot.
+---
 
 ## Cámara y calibración
 
-Se utiliza un modelo de cámara pinhole con parámetros intrínsecos dados por la web del [turtlebot](https://github.com/JdeRobot/RoboticsInfrastructure/blob/humble-devel/CustomRobots/turtlebot3/models/turtlebot3_waffle/model.sdf)
+Se usa un modelo pinhole con parámetros intrínsecos del TurtleBot3:
 
 ```python
-camera_matrix = np.array([
-    [focal, 0, cx],
-    [0, focal, cy],
-    [0, 0, 1]
-], dtype=np.float64)
-dist_coeffs = np.zeros((4, 1))
+camera_matrix = np.array([...])
+dist_coeffs = np.zeros((4,1))
 ```
 
-Estos parámetros permiten proyectar puntos 3D del mundo a coordenadas 2D de la imagen y son esenciales para la estimación precisa de la pose.
+Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la imagen para estimar la pose.
 
-# Posibles Mejoras
 
-- Integrar fusión odometría + visión para mayor precisión.
+## Posibles Mejoras
 
-- Uso de filtros de Kalman o SLAM visual para suavizar la estimación de pose.
+* Fusión de múltiples tags para robustez de la localización.
+* Uso de filtros de Kalman para suavizar la estimación.
+* Inclusión de sensores de distancia para evitar obstáculos.
 
-- Optimización de la detección de AprilTags con GPU o procesamiento paralelo.
 
-- Ajuste dinámico de la frecuencia de ejecución según la carga de procesamiento.
+```
+
