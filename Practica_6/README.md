@@ -40,7 +40,8 @@ tags_world = yaml.safe_load("apriltags_poses.yaml")
 
 ## Obtención de imágenes y ciclo de ejecución
 
-El robot captura imágenes de la cámara, detecta tags, estima la pose y decide el movimiento en un bucle a frecuencia fija:
+El robot captura imágenes de la cámara, detecta tags, estima la pose y decide el movimiento en un bucle a 20 
+Herzios como indica el enunciado:
 
 ```python
 Frequency.tick(20)
