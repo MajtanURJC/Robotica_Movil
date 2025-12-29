@@ -145,6 +145,3 @@ Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la image
 - Uso de filtros de Kalman para suavizar la estimación.
 - Inclusión de sensores de distancia para evitar obstáculos.
 
-
-```
-
