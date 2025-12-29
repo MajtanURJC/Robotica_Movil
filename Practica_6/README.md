@@ -119,7 +119,8 @@ El sistema actualiza continuamente:
 
 ## Cámara y calibración
 
-Se utiliza un modelo de cámara pinhole con parámetros intrínsecos dados por la web del [turtlebot]([https://ejemplo.com](https://github.com/JdeRobot/RoboticsInfrastructure/blob/humble-devel/CustomRobots/turtlebot3/models/turtlebot3_waffle/model.sdf)):
+Se utiliza un modelo de cámara pinhole con parámetros intrínsecos dados por la web del [turtlebot](https://github.com/JdeRobot/RoboticsInfrastructure/blob/humble-devel/CustomRobots/turtlebot3/models/turtlebot3_waffle/model.sdf)
+
 ```python
 camera_matrix = np.array([
     [focal, 0, cx],
