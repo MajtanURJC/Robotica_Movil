@@ -83,23 +83,23 @@ results = detector.detect(gray)
 
 Para cada tag detectado:
 
-Se dibuja la caja delimitadora y el centro del tag en la imagen.
+- Se dibuja la caja delimitadora y el centro del tag en la imagen.
 
-Se extrae el ID del tag para relacionarlo con su posición conocida.
+- Se extrae el ID del tag para relacionarlo con su posición conocida.
 
-Se calcula la pose del tag respecto a la cámara usando solvePnP:
-```python
-success, rvec, tvec = cv2.solvePnP(tag_object_points, image_points, camera_matrix, dist_coeffs)
-```
-## Transformaciones y estimación de pose del robot
+- Se calcula la pose del tag respecto a la cámara usando solvePnP:
+    ```python
+    success, rvec, tvec = cv2.solvePnP(tag_object_points, image_points, camera_matrix, dist_coeffs)
+    ```
+    ## Transformaciones y estimación de pose del robot
 
 Se construyen las matrices de transformación para convertir:
 
-tag → cámara
+- 1.tag → cámara
 
-cámara → robot
+- 2.cámara → robot
 
-mundo → tag
+- 3.mundo → tag
 
 Se combinan para obtener la pose del robot en el mundo:
 ```python
@@ -111,15 +111,15 @@ yaw_robot = math.atan2(world2robot[1, 0], world2robot[0, 0]) + math.pi / 2
 
 El sistema actualiza continuamente:
 
-Imagen con los tags detectados y sus bounding boxes.
+- Imagen con los tags detectados.
 
-Pose estimada del robot en el mapa.
+- Pose estimada del robot en el mapa.
 
-Velocidad lineal y angular del robot.
+- Velocidad lineal y angular del robot.
 
 ## Cámara y calibración
 
-Se utiliza un modelo de cámara pinhole con parámetros intrínsecos:
+Se utiliza un modelo de cámara pinhole con parámetros intrínsecos dados por la web del [turtlebot]([https://ejemplo.com](https://github.com/JdeRobot/RoboticsInfrastructure/blob/humble-devel/CustomRobots/turtlebot3/models/turtlebot3_waffle/model.sdf)):
 ```python
 camera_matrix = np.array([
     [focal, 0, cx],
