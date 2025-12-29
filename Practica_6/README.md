@@ -1,25 +1,25 @@
 # Marker Based Visual Localization
 
-Esta práctica implementa un sistema de **localización visual y navegación autónoma** de un robot móvil en un entorno 2D mediante la detección de marcadores visuales (AprilTags).  
+Esta práctica implementa un sistema de localización visual y navegación autónoma de un robot móvil en un entorno 2D mediante la detección de marcadores visuales (AprilTags).  
 
-El sistema estima la pose del robot usando visión por computador y utiliza dicha información para **moverse de forma autónoma**, buscando activamente nuevos marcadores.  
+El sistema estima la pose del robot usando visión por computador y utiliza dicha información para moverse de forma autónoma, buscando activamente nuevos marcadores.  
 
 El robot se representa en tres formas:
 
-- **Verde**: posición real
-- **Azul**: posición según odometría (con ruido)
-- **Rojo**: posición estimada mediante visión
+- Verde: posición real
+- Azul: posición según odometría (con ruido)
+- Rojo: posición estimada mediante visión
 
 ## Descripción del Comportamiento
 
-El sistema ejecuta un bucle continuo que integra **localización y navegación** en cada iteración.  
+El sistema ejecuta un bucle continuo que integra localización y navegación en cada iteración.  
 Tareas principales:
 
 1. Detección de AprilTags y estimación de pose global
 2. Navegación autónoma basada en visión
 3. Visualización del estado del robot y del entorno
 
-Ambos procesos se realizan **simultáneamente usando la misma observación visual**.
+Ambos procesos se realizan simultáneamente usando la misma observación visual.
 
 
 ## Inicialización y configuración
@@ -55,11 +55,11 @@ results = detector.detect(gray)
 
 Para cada tag detectado:
 
-* Se dibuja su contorno y centro en la imagen.
-* Se muestra su identificador (`tag_id`).
-* Se calcula la pose relativa a la cámara.
+- Se dibuja su contorno y centro en la imagen.
+-  Se muestra su identificador (`tag_id`).
+- Se calcula la pose relativa a la cámara.
 
-**Todos los tags visibles se dibujan en pantalla**, aunque solo uno se use para navegación.
+Todos los tags visibles se dibujan en pantalla, aunque solo uno se use para navegación.
 
 ```python
 for tag in results:
@@ -70,10 +70,10 @@ for tag in results:
 
 ## Selección del tag de referencia
 
-Se selecciona **un único tag por iteración** para:
+Se selecciona un único tag por iteración para:
 
-* Navegación
-* Estimación de pose global
+- Navegación
+- Estimación de pose global
 
 Criterio de selección: "el tag más cercano a la cámara", garantizando estabilidad y coherencia.
 
@@ -82,9 +82,9 @@ Criterio de selección: "el tag más cercano a la cámara", garantizando estabil
 
 Se calculan las transformaciones:
 
-1. Tag → cámara
-2. Cámara → robot
-3. Mundo → tag
+1. Tag -> cámara
+2. Cámara -> robot
+3. Mundo-> tag
 
 Combinando estas matrices se obtiene la pose global:
 
@@ -96,11 +96,11 @@ WebGUI.showEstimatedPose((x, y, yaw_robot))
 
 ## Navegación autónoma basada en visión
 
-El robot implementa un **comportamiento reactivo** guiado por los AprilTags:
+El robot implementa un comportamiento reactivo guiado por los AprilTags:
 
-* **Si no hay tags visibles**: gira explorando.
-* **Si detecta un tag**: se orienta hacia él y avanza hasta una distancia mínima.
-* **Cuando llega cerca**: deja de avanzar y gira para buscar otro tag.
+- Si no hay tags visibles: gira explorando.
+- Si detecta un tag: se orienta hacia él y avanza hasta una distancia mínima.
+- Cuando llega cerca: deja de avanzar y gira para buscar otro tag.
 
 ```python
 if tag_visible:
@@ -116,9 +116,9 @@ HAL.setW(w)
 
 Se actualiza continuamente:
 
-* Imagen de la cámara con todos los tags detectados.
-* Pose estimada del robot en el mapa.
-* Movimiento del robot en el entorno.
+- Imagen de la cámara con todos los tags detectados.
+- Pose estimada del robot en el mapa.
+- Movimiento del robot en el entorno.
 
 ```python
 WebGUI.showImage(image)
@@ -141,9 +141,9 @@ Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la image
 
 ## Posibles Mejoras
 
-* Fusión de múltiples tags para robustez de la localización.
-* Uso de filtros de Kalman para suavizar la estimación.
-* Inclusión de sensores de distancia para evitar obstáculos.
+- Fusión de múltiples tags para robustez de la localización.
+- Uso de filtros de Kalman para suavizar la estimación.
+- Inclusión de sensores de distancia para evitar obstáculos.
 
 
 ```
