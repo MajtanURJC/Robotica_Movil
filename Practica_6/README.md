@@ -138,7 +138,8 @@ dist_coeffs = np.zeros((4,1))
 
 Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la imagen para estimar la pose.
 
-
+## Video de demostración:
+https://drive.google.com/file/d/1F6glYmKV85gaup4tWRrghPxFdanHveLy/view?usp=sharing
 ## Posibles Mejoras
 
 - Fusión de múltiples tags para robustez de la localización.
