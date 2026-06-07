@@ -123,12 +123,11 @@ La imagen resultante muestra:
 * Celdas claras o blancas → zonas de alto coste (obstáculos inflados)
 * Celdas oscuras → camino óptimo hacia el destino
 
-## Problemas Detectados
+## Video agregado
 
-* Si el destino se selecciona sobre una zona inflada, no es posible planificar y se pide escoger otra ubicación.
-* En ocasiones, si el robot inicia fuera del campo BFS recalculado, pierde referencia hasta que se genera un nuevo destino.
-* Algunos pasillos muy estrechos pueden quedar bloqueados debido al inflado de obstáculos y no poder seguir girando haciendo
-  que se deba de reinciar el programa, pero es la desventaja de hacerlo ackerman.
+
+https://github.com/user-attachments/assets/ca8e2f1a-a0e6-4e23-add4-ed00e44aa3ac
+
 
 ## Posibles Mejoras
 
