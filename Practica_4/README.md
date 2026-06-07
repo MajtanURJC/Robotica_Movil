@@ -56,17 +56,16 @@ El robot busca, entre sus vecinos, aquellos cuya distancia potencial sea menor q
 Para evitar ir mirando directamente "a nuestros pies", se evalúan 1, 2 y 3 celdas hacia adelante 
 en la misma dirección antes de tomar una decisión.
 
-```python
-if val != -1 and val < mejor_val:
-    mejor_val = val
-    mejor_dir = (dr, dc)
-```
+Para decidir que vecino es el mejor se le aplica un valor cada movimiento, siendo 1 los vecinos directos
+hacia arriba, abajo, derecha e izquierda, y siendo raiz de dos los movimientos diagonales.
 
-El vector elegido representa la dirección deseada de avance.
+Una vez se calculan los mejores vecinos con el gasto y con el valor se guardan para sacar el angulo
+y poder llegar a ellos con el coche.
+
 
 ### 5. **Conversión a velocidades**
 
-A partir del vector `(dx, dy)` seleccionado:
+A partir del vector `(dx, dy)` seleccionado que son:
 
 * Se obtiene el ángulo objetivo con `atan2`.
 * Se compara con la orientación actual del robot.
@@ -76,14 +75,14 @@ A partir del vector `(dx, dy)` seleccionado:
 HAL.setV(5)
 HAL.setW(error_angle)
 ```
-Cabe matizar que he normalizado el angulo entre [pi,-pi] para que así el robot
-tambien tenga capacidad de ser ackerman.
 
 El robot siempre avanza hacia el punto de menor gradiente dentro del campo de potencial.
 
 ### 6. **Detección de llegada al destino**
 
-Cuando el robot está suficientemente cerca del objetivo, se detiene:
+Cuando el robot está suficientemente cerca del objetivo, se detiene a la espera de que le mandes otra posición u otra orden, 
+se puede configurar lo cerca que quieres que se quede del objetivo, en estre caso yo le he puesto 2 celdas de cercanía al objetivo
+que se detenga, de este modo:
 
 ```python
 if abs(robot_r - goal_r) <= 2:
@@ -93,7 +92,9 @@ if abs(robot_r - goal_r) <= 2:
 
 ## Inflado de Obstáculos
 
-El inflado consiste en ampliar artificialmente las zonas ocupadas marcando como peligrosas las celdas alrededor de cada edificio:
+El inflado consiste en ampliar artificialmente las zonas ocupadas marcando con un valor muy alto para que en el momento
+de que el coche vea el valor de los vecinos más cercanos decida no cogerlo y tratar de evitar esas zonas, yo he puesto un valor
+de 60 siendo configurable en la llamada a la función.
 
 ```python
 for dr in range(-radio, radio + 1):
