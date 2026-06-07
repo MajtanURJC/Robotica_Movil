@@ -9,7 +9,6 @@ ya que en la practica 2 no funcionaba muy bien.
 
 El robot ejecuta un bucle de control continuo que sigue estos pasos:
 
-
 ### 1. **Carga del mapa y preprocesado**
 
 * Se obtiene la imagen del mapa con:
@@ -21,13 +20,6 @@ El robot ejecuta un bucle de control continuo que sigue estos pasos:
 
 * Las celdas con valor `0` representan edificios y las `1` zonas transitables.
 
-* Antes de planificar, los obstáculos se inflan para generar un “colchón” alrededor de ellos:
-
-  ```python
-  array = inflar_obstaculos(array, radio=2)
-  ```
-
-Esto reduce trayectorias peligrosamente cercanas a las paredes.
 
 ### 2. **Selección del destino**
 
@@ -38,7 +30,9 @@ Cuando el destino cambia, se recalcula el campo de potencial.
 
 ### 3. **Cálculo del Wave Front Algorithm**
 
-El algoritmo se expande desde el destino, asignando valores crecientes a cada celda tal como dice el enunciado:
+El algoritmo se expande desde el destino hasta un poco más de la posición del coche, asignando valores crecientes a cada celda y 
+a los valores cercanos a los obstaculos dandoles un valor muy alto para no bloquear pero intentar que el coche a no ser que 
+sea imprescindible no pase por esa zona:
 
 ```python
 campo = wavefront_bfs(goal_r, goal_c, robot_r, robot_c, expandir_extra=15)
