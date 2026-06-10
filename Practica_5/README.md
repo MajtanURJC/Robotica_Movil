@@ -173,6 +173,9 @@ sustituyendolo por la linea anterior:
 pose = HAL.getOdom()
 rx, ry, ryaw = pose.x, pose.y, pose.yaw
 ```
+Que con Odom a secas quedará este mapa:
+
+<img width="353" height="294" alt="Captura desde 2026-06-10 17-57-35" src="https://github.com/user-attachments/assets/c262536c-90ed-4998-be7e-44af6a24aa13" />
 
 y para probar con odom2 u odom3 cambiando solo la primera linea de estos modos:
 
