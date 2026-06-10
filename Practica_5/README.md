@@ -4,7 +4,7 @@ Esta practica implementa un sistema básico de mapeado láser mediante una estra
 
 El objetivo es que el robot recorra autónomamente un almacén mientras genera un mapa de los obstáculos presentes en el entorno.
 
-La práctica se basa estrictamente en convertir las mediciones del láser a coordenadas en el mapa y rellenar una matriz que represente zonas libres, ocupadas o desconocidas.
+La práctica se basa en construir un mapa probabilístico de ocupación a partir de las mediciones del sensor láser. Cada observación actualiza la probabilidad de que una celda esté libre u ocupada, permitiendo reconstruir progresivamente el entorno explorado.
 
 ## Descripción del Comportamiento
 
@@ -19,29 +19,23 @@ A continuación se detallan las etapas más relevantes.
 
 ## 1. **Inicialización del mapa**
 
-Se crea una matriz de tamaño fijo `970 x 1500`, tal como indica el enunciado:
+Se inicializa un grid de ocupación probabilístico donde todas las celdas comienzan con una probabilidad de ocupación de 0.5 (estado desconocido).
 
 ```python
-user_map = np.full((MAP_H, MAP_W), UNKNOWN, dtype=np.uint8)
+user_map = np.full((MAP_H, MAP_W), 0.5, dtype=float)
 ```
-
-Valores usados:
-
-* `UNKNOWN = 127` → celdas no exploradas
-* `FREE = 255` → espacio libre
-* `OCCUPIED = 0` → obstáculo detectado
 
 El mapa se envía a la GUI con:
 
 ```python
-WebGUI.setUserMap(user_map)
+WebGUI.setUserMap(image)
 ```
 
 ---
 
 ## 2. **Obtención de posición y datos del láser**
 
-En cada iteración del bucle:
+En cada iteración del bucle de control se obtiene la posición actual del robot y las mediciones del sensor láser.
 
 ```python
 pose = HAL.getPose3d()
@@ -51,62 +45,30 @@ laser_data = HAL.getLaserData()
 laser = laser_data.values
 ```
 
-Se usa la **pose real** del robot (no odometría con ruido), ya que la práctica asume *known positions*.
+La posición proporciona las coordenadas y orientación del robot en el entorno, mientras que el LIDAR devuelve una medida de distancia para cada dirección alrededor del robot.
+
+Estas medidas permiten conocer tanto la ubicación desde la que se realiza la observación como la distancia a los posibles obstáculos detectados.
+
+En esta implementación se utiliza la pose real proporcionada por el simulador (known position), por lo que no existe error de localización durante la construcción del mapa. Esto permite centrar el ejercicio en el proceso de mapeado a partir de las observaciones del sensor láser.
 
 ---
 
 ## 3. **Conversión de coordenadas al mapa**
 
-El robot convierte posiciones del mundo a píxeles del mapa con:
 
-```python
-p = WebGUI.poseToMap(x, y, yaw)
-```
-
-Y se valida que estén dentro de los límites:
-
-```python
-if 0 <= px < MAP_W and 0 <= py < MAP_H:
-```
-
-Esto permite marcar correctamente las celdas en el grid de ocupación.
+Para representar la información del sensor en el mapa, las coordenadas del mundo real se transforman a coordenadas de píxel mediante la función proporcionada por el simulador. Tras realizar la conversión, se comprueba que la posición obtenida se encuentre dentro de los límites del mapa. Esta validación evita accesos fuera de rango y garantiza que las actualizaciones se realicen únicamente sobre celdas válidas del grid de ocupación. De este modo, las observaciones del robot pueden proyectarse correctamente sobre el mapa utilizado para la reconstrucción del entorno.
 
 ---
 
-## 4. **Ray casting con Bresenham**
+## 4. **Ray casting con linspace**
 
-Para cada rayo láser (0–359 grados):
+Para cada una de las medidas del láser, se calcula la posición del punto donde termina el rayo utilizando la distancia medida, la orientación del robot y el ángulo correspondiente.
 
-1. Se calcula la posición del impacto:
+A continuación, esa posición se transforma a coordenadas del mapa para obtener la celda final del rayo. Después, se recorren todas las celdas situadas entre la posición del robot y el punto final mediante la función de trazado de rayos implementada en el programa. Estas celdas se consideran espacio libre y su probabilidad de ocupación se reduce.
 
-```python
-wx = rx + d * cos(...)
-wy = ry + d * sin(...)
-```
+Si la medida corresponde realmente a un impacto contra un obstáculo (es decir, la distancia detectada es menor que el alcance máximo del sensor), la celda final del rayo se actualiza aumentando su probabilidad de estar ocupada.
 
-2. Se obtiene el píxel final del rayo:
-
-```python
-end_px = world_to_map(wx, wy)
-```
-
-3. Se trazan todas las celdas intermedias con **Bresenham**:
-
-```python
-for cx, cy in bresenham(rpx, rpy, ex, ey):
-    user_map[cy, cx] = FREE
-```
-
-Esto marca como libres todas las posiciones entre el robot y el punto medido.
-
-4. Si el rayo golpea un obstáculo:
-
-```python
-if hit:
-    user_map[ey, ex] = OCCUPIED
-```
-
-Con esto se grafica el territorio.
+Repitiendo este proceso para todos los rayos y para todas las observaciones del láser, el mapa probabilístico va incorporando evidencia sobre las zonas libres y ocupadas del entorno, permitiendo reconstruir progresivamente la distribución de obstáculos.
 
 
 ## 5. **Exploración del entorno**
@@ -151,34 +113,29 @@ WebGUI.setUserMap(user_map)
 
 # Mapa de Ocupación
 
-La matriz generada tiene tres tipos de celdas:
+La matriz generada tiene dos tipos de celdas:
 
-* **255 (blanco)** → Obstáculo detectado por el láser
-* **0 (negro)** → Zona libre por donde ha pasado un rayo
-* **127 (gris)** → Aún no explorado
+* **255 (blanco)** → Zona libre en la que el laser puede pasar sin obstaculos
+* **127 (gris)** → Zona no explorada, ya sea porque hay obstaculo o porque aun no ha pasado.
 
 ## Odometría
 
-Como el entorno nos da el siguiente metodo para calcular la posición que no tiene ruido ni nada no se usa odometria:
+Como el entorno nos da el siguiente metodo para calcular la posición que no tiene ruido ya que no se usa odometria:
 
 ```python
-HAL.getPose3d()
+pose = HAL.getPose3d()
 ```
 
-pero si se quisiese añadir odometría ademas de tal y como está comentado en el código se usarían estas funciones 
-sustituyendolo por la linea anterior:
-
+para añadir odometría, se sustituiría la anterior linea por la siguiente:
 
 ```python
 pose = HAL.getOdom()
-rx, ry, ryaw = pose.x, pose.y, pose.yaw
 ```
-Que con Odom a secas quedará este mapa:
+Que con Odom quedará este mapa:
 
 <img width="353" height="294" alt="Captura desde 2026-06-10 17-57-35" src="https://github.com/user-attachments/assets/c262536c-90ed-4998-be7e-44af6a24aa13" />
 
 y para probar con odom2 u odom3 cambiando solo la primera linea de estos modos:
-
 
 ```python
 pose = HAL.getOdom2()
@@ -193,13 +150,4 @@ rx, ry, ryaw = pose.x, pose.y, pose.yaw
 ## Video de uso con ODOM:
 
 [https://drive.google.com/file/d/1GYa0bYe2-q5kDpNoNLu2X9FUfm-OUZ_3/view?usp=sharing](https://drive.google.com/file/d/1KIMG7wfVuvABP7O8hLasiftSw-3cP01Y/view?usp=sharing)
-
-## Posibles Mejoras
-
-* **Integrar SLAM** (GMapping, Hector SLAM, Karto…). Evitaría errores acumulados y permitiría usar solo odometría.
-
-
-* **Fusión de sensores**
-  Odometría + LIDAR para mejorar precisión en la ocupación.
-
 
