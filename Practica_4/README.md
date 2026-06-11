@@ -2,8 +2,6 @@
 
 Este proyecto implementa un sistema de navegación global basado en el descenso de gradiante.
 El objetivo es que el robot alcance el destino seleccionado en el mapa siguiendo el gradiente descendente del campo de potencial, mientras evita colisiones gracias a un inflado artificial de los obstáculos.
-Es verdad que el enunciado no pide explicitamente que se haga ackerman pero yo he querido hacerlo así para entender más ackerman 
-ya que en la practica 2 no funcionaba muy bien.
 
 ## Descripción del Comportamiento
 
@@ -32,7 +30,7 @@ Cuando el destino cambia, se recalcula el campo de potencial.
 
 El algoritmo se expande desde el destino hasta un poco más de la posición del coche, asignando valores crecientes a cada celda y 
 a los valores cercanos a los obstaculos dandoles un valor muy alto para no bloquear pero intentar que el coche a no ser que 
-sea imprescindible no pase por esa zona:
+sea imprescindible no pase por esa zona, lo que he definido como un inflado artificial:
 
 ```python
 campo = wavefront_bfs(goal_r, goal_c, robot_r, robot_c, expandir_extra=15)
@@ -69,16 +67,17 @@ A partir del vector de dirección seleccionado (dx, dy), que representa el movim
 
 Después, este ángulo objetivo se compara con la orientación actual del robot  para obtener el error angular, es decir, la desviación entre la dirección actual y la dirección deseada.
 
-A partir de este error se generan las órdenes de control del robot:
+A partir de este error se generan las velocidades del robot:
 
 - La velocidad angular se mantiene proporcional al error de orientación, de forma que el robot gira más rápido cuanto más desalineado está.
 - La velocidad lineal ya no es constante, sino que depende del propio error angular.
 
 Esto significa que el robot avanza a máxima velocidad cuando está bien orientado hacia el objetivo, pero reduce progresivamente su velocidad cuando necesita girar. Si el giro es muy grande, la velocidad se reduce casi a cero, permitiendo que el robot primero se reoriente antes de avanzar.
 
-Este comportamiento mejora la estabilidad del sistema de navegación, ya que evita que el robot avance rápido mientras está mal alineado, reduciendo así la probabilidad de chocar con paredes u obstáculos durante los giros.
+Mediante este comportamiento conseguimos que sea muy dificil que el coche se choque con paredes y que al tener que cambiar de dirección lo pueda hacer
+de manera segura.
 
-El robot siempre avanza hacia el punto de menor gradiente dentro del campo de potencial.
+El coche siempre avanza hacia el punto de menor gradiente dentro del campo de potencial, es decir, el más oscuro visualmente.
 
 ### 6. **Detección de llegada al destino**
 
@@ -98,13 +97,7 @@ El inflado consiste en ampliar artificialmente las zonas ocupadas marcando con u
 de que el coche vea el valor de los vecinos más cercanos decida no cogerlo y tratar de evitar esas zonas, yo he puesto un valor
 de 60 siendo configurable en la llamada a la función.
 
-```python
-for dr in range(-radio, radio + 1):
-    for dc in range(-radio, radio + 1):
-        nuevo[nr, nc] = 2
-```
-
-Esto  evita que el robot roce esquinas o pasillos estrechos.
+Esto hace que al elegir el de menor potencial, nunca vaya a elegir esos muy inflados a no ser que sea vital para la ruta, evitando asi prohibirlos.
 
 
 ## Visualización
@@ -115,24 +108,9 @@ El campo generado por el algoritmo se muestra mediante la interfaz gráfica:
 WebGUI.showNumpy(campo)
 ```
 
-La imagen resultante muestra:
-
-* Celdas claras o blancas → zonas de alto coste (obstáculos inflados)
-* Celdas oscuras → camino óptimo hacia el destino
+La imagen resultante muestra como según te acercas a la posición objetivo las celdas van teniendo menos potencial y haciendose así más oscuras,
+en cambio, cuanto más nos alejamos del objetivo, más potencial tiene y más blanco se ve.
 
 ## Video agregado
 
-
 https://github.com/user-attachments/assets/ca8e2f1a-a0e6-4e23-add4-ed00e44aa3ac
-
-
-## Posibles Mejoras
-
-* Ajuste dinámico del radio de inflado según la velocidad o el ángulo del robot.
-* Añadir heurísticas para evitar zigzags en pasillos rectos.
-* Integrar un módulo de replanificación continua para entornos dinámicos.
-* Suavizado del campo de potencial para obtener trayectorias más fluidas.
-* Combinación con algoritmos de navegación local (VFH, VFF, DWA).
-
-
-
