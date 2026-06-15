@@ -11,14 +11,18 @@ El robot se representa en dos formas:
 
 ## Descripción del Comportamiento
 
-El sistema ejecuta un bucle continuo que integra localización y navegación en cada iteración.  
-Tareas principales:
+El sistema ejecuta un bucle continuo en el que se integran las tareas de percepción, estimación de la posición y navegación del robot.
 
-1. Detección de AprilTags
-2. Si no se detectan AprilTags detección por odometría
-3. Navegación autónoma basada en visión u odometría, dependiendo de la detección
-4. Visualización de la posición del robot y del entorno
+En cada iteración del bucle se realizan las siguientes operaciones:
 
+- Adquisición y procesamiento de la imagen de la cámara.
+- Detección de AprilTags en el entorno.
+- Estimación de la pose del robot:
+-- Mediante visión si se detectan marcadores.
+-- Mediante odometría cuando no hay marcadores visibles.
+- Actualización de la posición global estimada del robot.
+- Ejecución del comportamiento de navegación autónoma en función de la información disponible.
+- Visualización del entorno y de la pose estimada del robot en la interfaz gráfica.
 
 ## Configuración
 
