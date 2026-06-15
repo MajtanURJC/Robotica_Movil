@@ -18,8 +18,8 @@ En cada iteración del bucle se realizan las siguientes operaciones:
 - Adquisición y procesamiento de la imagen de la cámara.
 - Detección de AprilTags en el entorno.
 - Estimación de la pose del robot:
--- Mediante visión si se detectan marcadores.
--- Mediante odometría cuando no hay marcadores visibles.
+    -- Mediante visión si se detectan marcadores.
+    -- Mediante odometría cuando no hay marcadores visibles.
 - Actualización de la posición global estimada del robot.
 - Ejecución del comportamiento de navegación autónoma en función de la información disponible.
 - Visualización del entorno y de la pose estimada del robot en la interfaz gráfica.
