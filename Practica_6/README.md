@@ -128,8 +128,6 @@ WebGUI.showImage(image)
 WebGUI.showEstimatedPose((x, y, yaw_robot))
 ```
 
----
-
 ## Cámara y calibración
 
 Se usa un modelo pinhole con parámetros intrínsecos del TurtleBot3:
