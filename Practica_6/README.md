@@ -98,6 +98,7 @@ El robot implementa un comportamiento reactivo guiado por los AprilTags:
 - Si no hay tags visibles: gira explorando.
 - Si detecta un tag: se orienta hacia él y avanza a una velocidad mientras sigue girando.
 - Cuando deja de verlo deja de avanzar y solo gira hasta que ve otro.
+Conseguimos así diferencia cuando esta calculando de posición y cuando de odometría.
 
 ```python
 if tag_visible:
