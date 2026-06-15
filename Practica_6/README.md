@@ -25,11 +25,6 @@ Tareas principales:
 Se configuran los parámetros intrinsecos que tenemos gracias al manual de la camara y los extrinsecos que calculamos:
 
 ```python
-import cv2, HAL, WebGUI, pyapriltags, Frequency, numpy as np, yaml
-
-Se inicializa el detector de AprilTags y se define el tamaño de los marcadores:
-
-```python
 detector = pyapriltags.Detector(families="tag36h11")
 TAG_SIZE = 0.24
 tag_object_points = ...  # puntos 3D del tag
