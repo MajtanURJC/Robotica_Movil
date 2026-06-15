@@ -4,7 +4,7 @@ Esta práctica implementa un sistema de localización visual y navegación autó
 
 El sistema estima la pose del robot usando visión por computador y utiliza dicha información para moverse de forma autónoma, buscando activamente nuevos marcadores.  
 
-El robot se representa en tres formas:
+El robot se representa en dos formas:
 
 - Verde: posición real
 - Rojo: posición estimada mediante visión u odometría
