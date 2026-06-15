@@ -7,24 +7,22 @@ El sistema estima la pose del robot usando visión por computador y utiliza dich
 El robot se representa en tres formas:
 
 - Verde: posición real
-- Azul: posición según odometría (con ruido)
-- Rojo: posición estimada mediante visión
+- Rojo: posición estimada mediante visión u odometría
 
 ## Descripción del Comportamiento
 
 El sistema ejecuta un bucle continuo que integra localización y navegación en cada iteración.  
 Tareas principales:
 
-1. Detección de AprilTags y estimación de pose global
-2. Navegación autónoma basada en visión
-3. Visualización del estado del robot y del entorno
+1. Detección de AprilTags
+2. Si no se detectan AprilTags detección por odometría
+3. Navegación autónoma basada en visión u odometría, dependiendo de la detección
+4. Visualización de la posición del robot y del entorno
 
-Ambos procesos se realizan simultáneamente usando la misma observación visual.
 
+## Configuración
 
-## Inicialización y configuración
-
-Se importan las librerías necesarias y se configuran los parámetros:
+Se configuran los parámetros intrinsecos que tenemos gracias al manual de la camara y los extrinsecos que calculamos:
 
 ```python
 import cv2, HAL, WebGUI, pyapriltags, Frequency, numpy as np, yaml
@@ -38,25 +36,12 @@ tag_object_points = ...  # puntos 3D del tag
 tags_world = yaml.safe_load("apriltags_poses.yaml")
 ```
 
-## Obtención de imágenes y ciclo de ejecución
-
-El robot captura imágenes de la cámara, detecta tags, estima la pose y decide el movimiento en un bucle a 20 
-Herzios como indica el enunciado:
-
-```python
-Frequency.tick(20)
-image = HAL.getImage()
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-results = detector.detect(gray)
-```
-
-
 ## Detección y visualización de AprilTags
 
-Para cada tag detectado:
+Para cada tag detectado en las imagenes:
 
 - Se dibuja su contorno y centro en la imagen.
--  Se muestra su identificador (`tag_id`).
+- Se muestra su identificador (`tag_id`).
 - Se calcula la pose relativa a la cámara.
 
 Todos los tags visibles se dibujan en pantalla, aunque solo uno se use para navegación.
@@ -67,6 +52,23 @@ for tag in results:
     if es_mas_cercano(tag):
         tag_seleccionado = tag
 ```
+## Estimación de posición mediante odometría
+
+Cuando no se detecta ningún AprilTag en la imagen, el sistema continúa estimando la posición del robot utilizando la información proporcionada por la odometría.
+
+De esta forma, el robot puede seguir manteniendo una estimación de su pose incluso cuando pierde temporalmente la referencia visual de los marcadores.
+
+Funcionamiento
+Si existe un AprilTag visible:
+    Calcular la posición global mediante visión
+    Guardar la posición estimada como referencia
+
+Si no existe ningún AprilTag visible:
+    Obtener el desplazamiento realizado desde la última medida
+    Actualizar la posición estimada utilizando la odometría
+    Actualizar la orientación del robot
+
+Este mecanismo permite mantener una localización continua durante los periodos en los que los marcadores no son visibles. Cuando un AprilTag vuelve a ser detectado, la posición estimada se corrige utilizando nuevamente la información visual, reduciendo así el error acumulado por la odometría.
 
 ## Selección del tag de referencia
 
@@ -99,14 +101,15 @@ WebGUI.showEstimatedPose((x, y, yaw_robot))
 El robot implementa un comportamiento reactivo guiado por los AprilTags:
 
 - Si no hay tags visibles: gira explorando.
-- Si detecta un tag: se orienta hacia él y avanza hasta una distancia mínima.
-- Cuando llega cerca: deja de avanzar y gira para buscar otro tag.
+- Si detecta un tag: se orienta hacia él y avanza a una velocidad mientras sigue girando.
+- Cuando deja de verlo deja de avanzar y solo gira hasta que ve otro.
 
 ```python
 if tag_visible:
-    v, w = calcular_velocidad(tag)
+    v = 0.05
 else:
-    v, w = 0, exploracion_giro
+    v = 0 #gira sobre si mismo hasta ver otro
+
 HAL.setV(v)
 HAL.setW(w)
 ```
@@ -140,9 +143,4 @@ Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la image
 
 ## Video de demostración:
 https://drive.google.com/file/d/1F6glYmKV85gaup4tWRrghPxFdanHveLy/view?usp=sharing
-## Posibles Mejoras
-
-- Fusión de múltiples tags para robustez de la localización.
-- Uso de filtros de Kalman para suavizar la estimación.
-- Inclusión de sensores de distancia para evitar obstáculos.
 
