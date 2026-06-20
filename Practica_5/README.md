@@ -139,6 +139,9 @@ En cambio, en el universo de Medium Noise nos quedaría este mapa:
 
 <img width="724" height="276" alt="MEDIORUYID" src="https://github.com/user-attachments/assets/3b42c3d9-4efd-4f30-9b47-755db09aa463" />
 
+Y por útlimo, en el universo de High Noise tenemos este mapa:
+
+<img width="724" height="276" alt="HUGH" src="https://github.com/user-attachments/assets/12bec663-85ed-4d96-924c-bd43146372c5" />
 
 
 ## Video de uso con ODOM:
