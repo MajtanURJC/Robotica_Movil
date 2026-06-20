@@ -15,7 +15,6 @@ El robot ejecuta un bucle continuo con dos tareas principales:
 
 A continuación se detallan las etapas más relevantes.
 
----
 
 ## 1. **Inicialización del mapa**
 
@@ -30,8 +29,6 @@ El mapa se envía a la GUI con:
 ```python
 WebGUI.setUserMap(image)
 ```
-
----
 
 ## 2. **Obtención de posición y datos del láser**
 
@@ -51,14 +48,10 @@ Estas medidas permiten conocer tanto la ubicación desde la que se realiza la ob
 
 En esta implementación se utiliza la pose real proporcionada por el simulador (known position), por lo que no existe error de localización durante la construcción del mapa. Esto permite centrar el ejercicio en el proceso de mapeado a partir de las observaciones del sensor láser.
 
----
-
 ## 3. **Conversión de coordenadas al mapa**
 
 
 Para representar la información del sensor en el mapa, las coordenadas del mundo real se transforman a coordenadas de píxel mediante la función proporcionada por el simulador. Tras realizar la conversión, se comprueba que la posición obtenida se encuentre dentro de los límites del mapa. Esta validación evita accesos fuera de rango y garantiza que las actualizaciones se realicen únicamente sobre celdas válidas del grid de ocupación. De este modo, las observaciones del robot pueden proyectarse correctamente sobre el mapa utilizado para la reconstrucción del entorno.
-
----
 
 ## 4. **Ray casting con linspace**
 
