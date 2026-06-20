@@ -132,7 +132,13 @@ para añadir odometría, se sustituiría la anterior linea por la siguiente:
 pose = HAL.getOdom()
 ```
 Que con Odometría en el Universo de Small Noise quedaría este mapa:
+
 <img width="724" height="276" alt="Captura desde 2026-06-20 12-56-35" src="https://github.com/user-attachments/assets/283ffe2c-1221-454a-83c1-15e8fe10e54c" />
+
+En cambio, en el universo de Medium Noise nos quedaría este mapa:
+
+<img width="724" height="276" alt="MEDIORUYID" src="https://github.com/user-attachments/assets/3b42c3d9-4efd-4f30-9b47-755db09aa463" />
+
 
 
 ## Video de uso con ODOM:
