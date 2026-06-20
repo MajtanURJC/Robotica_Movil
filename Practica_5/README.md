@@ -124,15 +124,15 @@ para añadir odometría, se sustituiría la anterior linea por la siguiente:
 ```python
 pose = HAL.getOdom()
 ```
-Que con Odometría en el Universo de Small Noise quedaría este mapa:
+Que con Odometría en el Universo de Small Laser Mapping Warehouse quedaría este mapa:
 
 <img width="724" height="276" alt="Captura desde 2026-06-20 12-56-35" src="https://github.com/user-attachments/assets/283ffe2c-1221-454a-83c1-15e8fe10e54c" />
 
-En cambio, en el universo de Medium Noise nos quedaría este mapa:
+En cambio, en el universo de Small Laser Mapping Warehouse Medium Noise nos quedaría este mapa:
 
 <img width="724" height="276" alt="MEDIORUYID" src="https://github.com/user-attachments/assets/3b42c3d9-4efd-4f30-9b47-755db09aa463" />
 
-Y por útlimo, en el universo de High Noise tenemos este mapa:
+Y por útlimo, en el universo de Small Laser Mapping Warehouse High Noise tenemos este mapa:
 
 <img width="724" height="276" alt="HUGH" src="https://github.com/user-attachments/assets/12bec663-85ed-4d96-924c-bd43146372c5" />
 
@@ -141,5 +141,7 @@ del rastro real (verde) viendo que cuanto más ruido más rapido va aumentando l
 
 ## Video de uso con Pose3D:
 
-https://github.com/user-attachments/assets/3a49b30a-84d9-4558-9ae4-44cce2bc8959
+https://github.com/user-attachments/assets/46b88ec5-a31c-4f44-95b8-e76507e9c5ce
+
+
 
