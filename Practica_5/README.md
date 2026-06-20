@@ -133,8 +133,7 @@ pose = HAL.getOdom()
 ```
 Que con Odometría en el Universo de Small Noise quedaría este mapa:
 
-<img width="724" height="276" alt="Small_Odom" src="https://github.com/user-attachments/assets/ad28e11f-0a60-44f5-8359-debaef388a7c" />
-
+<img width="724" height="276" alt="Small_Odom" src="https://github.com/user-attachments/assets/7ede585e-3e34-405a-8731-e7abd6b22417" />
 
 
 ## Video de uso con ODOM:
