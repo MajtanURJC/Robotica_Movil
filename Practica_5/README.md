@@ -131,21 +131,11 @@ para añadir odometría, se sustituiría la anterior linea por la siguiente:
 ```python
 pose = HAL.getOdom()
 ```
-Que con Odom quedará este mapa:
+Que con Odometría en el Universo de Small Noise quedaría este mapa:
 
-<img width="353" height="294" alt="Captura desde 2026-06-10 17-57-35" src="https://github.com/user-attachments/assets/c262536c-90ed-4998-be7e-44af6a24aa13" />
+<img width="724" height="276" alt="Small_Odom" src="https://github.com/user-attachments/assets/ad28e11f-0a60-44f5-8359-debaef388a7c" />
 
-y para probar con odom2 u odom3 cambiando solo la primera linea de estos modos:
 
-```python
-pose = HAL.getOdom2()
-rx, ry, ryaw = pose.x, pose.y, pose.yaw
-```
-
-```python
-odom = HAL.getOdom3()
-rx, ry, ryaw = pose.x, pose.y, pose.yaw
-```
 
 ## Video de uso con ODOM:
 
