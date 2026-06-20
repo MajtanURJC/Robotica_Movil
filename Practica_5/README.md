@@ -148,5 +148,5 @@ del rastro real (verde) viendo que cuanto más ruido más rapido va aumentando l
 
 ## Video de uso con Pose3D:
 
-[https://drive.google.com/file/d/1GYa0bYe2-q5kDpNoNLu2X9FUfm-OUZ_3/view?usp=sharing](https://drive.google.com/file/d/1KIMG7wfVuvABP7O8hLasiftSw-3cP01Y/view?usp=sharing)
+https://github.com/user-attachments/assets/3a49b30a-84d9-4558-9ae4-44cce2bc8959
 
