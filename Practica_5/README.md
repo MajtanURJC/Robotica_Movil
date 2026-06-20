@@ -143,6 +143,8 @@ Y por útlimo, en el universo de High Noise tenemos este mapa:
 
 <img width="724" height="276" alt="HUGH" src="https://github.com/user-attachments/assets/12bec663-85ed-4d96-924c-bd43146372c5" />
 
+Más alla de analizar cual es el mapa más realista, se puede ver la cantidad de ruido viendo como difiere el rasto que deja la Odometria (azul) 
+del rastro real (verde) viendo que cuanto más ruido más rapido va aumentando la diferencia y más difiere al final.
 
 ## Video de uso con ODOM:
 
