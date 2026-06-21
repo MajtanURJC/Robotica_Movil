@@ -33,6 +33,14 @@ detector = pyapriltags.Detector(families="tag36h11")
 TAG_SIZE = 0.24
 tag_object_points = ...  # puntos 3D del tag
 tags_world = yaml.safe_load("apriltags_poses.yaml")
+
+cam_x = ...
+cam_y = ...
+cam_z = ...
+
+cam_roll = ...
+cam_pitch = ...
+cam_yaw = ...
 ```
 
 ## Detección y visualización de AprilTags
@@ -78,7 +86,6 @@ Se selecciona un único tag por iteración para:
 
 Criterio de selección: "el tag más cercano a la cámara", garantizando estabilidad y coherencia.
 
-
 ## Transformaciones y estimación de pose del robot
 
 Se calculan las transformaciones:
@@ -94,26 +101,6 @@ world2robot = world2tag @ cam2tag @ cam2robot
 x, y, yaw_robot = world2robot[0,3], world2robot[1,3], atan2(...)
 WebGUI.showEstimatedPose((x, y, yaw_robot))
 ```
-
-## Navegación autónoma basada en visión
-
-El robot implementa un comportamiento reactivo guiado por los AprilTags:
-
-- Si no hay tags visibles: gira explorando.
-- Si detecta un tag: se orienta hacia él y avanza a una velocidad mientras sigue girando.
-- Cuando deja de verlo deja de avanzar y solo gira hasta que ve otro.
-Conseguimos así diferencia cuando esta calculando de posición y cuando de odometría.
-
-```python
-if tag_visible:
-    v = 0.05
-else:
-    v = 0 #gira sobre si mismo hasta ver otro
-
-HAL.setV(v)
-HAL.setW(w)
-```
-
 
 ## Visualización y control
 
@@ -140,5 +127,5 @@ dist_coeffs = np.zeros((4,1))
 Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la imagen para estimar la pose.
 
 ## Video de demostración:
-https://drive.google.com/file/d/1F6glYmKV85gaup4tWRrghPxFdanHveLy/view?usp=sharing
 
+https://github.com/user-attachments/assets/46dda129-60cd-413b-8100-033fd772da6a
