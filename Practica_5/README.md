@@ -134,7 +134,7 @@ En cambio, en el universo de Small Laser Mapping Warehouse Medium Noise nos qued
 
 Y por útlimo, en el universo de Small Laser Mapping Warehouse High Noise tenemos este mapa:
 
-<img width="724" height="276" alt="HUGH" src="https://github.com/user-attachments/assets/12bec663-85ed-4d96-924c-bd43146372c5" />
+<img width="738" height="290" alt="Mapa_High_Noise" src="https://github.com/user-attachments/assets/098b63e3-ac30-4f63-9fb3-bfec63803ee1" />
 
 Más alla de analizar cual es el mapa más realista, se puede ver la cantidad de ruido viendo como difiere el rasto que deja la Odometria (azul) 
 del rastro real (verde) viendo que cuanto más ruido más rapido va aumentando la diferencia y más difiere al final.
@@ -143,5 +143,6 @@ del rastro real (verde) viendo que cuanto más ruido más rapido va aumentando l
 
 https://github.com/user-attachments/assets/46b88ec5-a31c-4f44-95b8-e76507e9c5ce
 
+## Video de uso con ODOM:
 
-
+https://github.com/user-attachments/assets/6f9f3cdf-3f70-444d-921d-b389a5efe244
