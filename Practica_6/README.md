@@ -117,7 +117,7 @@ WebGUI.showEstimatedPose((x, y, yaw_robot))
 
 ## Cámara y calibración
 
-Se usa un modelo pinhole con parámetros intrínsecos del TurtleBot3:
+Se usa un modelo pinhole con parámetros intrínsecos del [TurtleBot3]([https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/](https://github.com/JdeRobot/RoboticsInfrastructure/blob/humble-devel/CustomRobots/turtlebot3/models/turtlebot3_waffle/model.sdf)):
 
 ```python
 camera_matrix = np.array([...])
