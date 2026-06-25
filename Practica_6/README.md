@@ -66,8 +66,9 @@ for tag in results:
 
 El comportamiento se basa en dos señales principales:
 
-Distancia al tag (min_dist) → controla la velocidad de avance
-Error horizontal en imagen (dx) → controla la velocidad de giro
+Distancia al tag (min_dist) -> controla la velocidad de avance 
+
+Error horizontal en imagen (dx) -> controla la velocidad de giro
 
 El robot actúa de forma proporcional: cuanto más lejos está, más avanza; cuanto más descentrado está el tag, más corrige su orientación.
 
