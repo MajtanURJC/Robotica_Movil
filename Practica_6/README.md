@@ -24,6 +24,8 @@ En cada iteración del bucle se realizan las siguientes operaciones:
 - Ejecución del comportamiento de navegación autónoma en función de la información disponible.
 - Visualización del entorno y de la pose estimada del robot en la interfaz gráfica.
 
+Cabe destacar tambien que se usa solvePnP para estimar la pose del AprilTag a partir de correspondencias entre puntos 3D conocidos y sus esquinas detectadas en la imagen, obteniendo la rotación y traslación del tag respecto a la cámara.
+
 ## Configuración
 
 Se configuran los parámetros intrinsecos que tenemos gracias al manual de la camara y los extrinsecos que calculamos:
@@ -59,6 +61,31 @@ for tag in results:
     if es_mas_cercano(tag):
         tag_seleccionado = tag
 ```
+
+## Movimiento cuando detecta AprilTag
+
+El comportamiento se basa en dos señales principales:
+
+Distancia al tag (min_dist) → controla la velocidad de avance
+Error horizontal en imagen (dx) → controla la velocidad de giro
+
+El robot actúa de forma proporcional: cuanto más lejos está, más avanza; cuanto más descentrado está el tag, más corrige su orientación.
+
+```python
+SI se detecta AprilTag:
+    calcular distancia (min_dist) y error horizontal (dx)
+
+    SI min_dist > MAX_DIST:
+        v = proporcional a distancia (limitada)
+        w = proporcional a dx (centrado)
+        aplicar v, w
+
+    SI no:
+        v = 0
+        w = giro constante
+        aplicar v, w
+```
+
 ## Estimación de posición mediante odometría
 
 Cuando no se detecta ningún AprilTag en la imagen, el sistema continúa estimando la posición del robot utilizando la información proporcionada por la odometría.
