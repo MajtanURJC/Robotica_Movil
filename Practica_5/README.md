@@ -124,6 +124,11 @@ para añadir odometría, se sustituiría la anterior linea por la siguiente:
 ```python
 pose = HAL.getOdom()
 ```
+
+Primero de todo el mapa con la posición real obtenida con getPose3D quedaría:
+
+<img width="724" height="276" alt="Pose3D" src="https://github.com/user-attachments/assets/ffb2c95c-76f5-4f28-a76e-aaa7dcf546ab" />
+
 Que con Odometría en el Universo de Small Laser Mapping Warehouse quedaría este mapa:
 
 <img width="724" height="276" alt="Captura desde 2026-06-20 12-56-35" src="https://github.com/user-attachments/assets/283ffe2c-1221-454a-83c1-15e8fe10e54c" />
