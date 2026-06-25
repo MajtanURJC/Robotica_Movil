@@ -128,4 +128,4 @@ Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la image
 
 ## Video de demostración:
 
-https://github.com/user-attachments/assets/46dda129-60cd-413b-8100-033fd772da6a
+https://github.com/user-attachments/assets/664eb43c-2e9e-4d06-b614-1b818ca5a8ac
