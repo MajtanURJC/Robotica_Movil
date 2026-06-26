@@ -153,7 +153,11 @@ dist_coeffs = np.zeros((4,1))
 ```
 
 Permite proyectar correctamente puntos 3D del mundo a coordenadas 2D de la imagen para estimar la pose.
+## Video de demostración de pruebas para ver que calculase bien la posición respecto se acercaba a los AprilTags:
 
-## Video de demostración:
+https://github.com/user-attachments/assets/369ac962-9fa8-4367-871b-d8c4c793911d
 
-https://github.com/user-attachments/assets/cae500ec-87a5-424b-b7c1-f7f2b5b5e107
+Y la mejora entre ambos video es de encontrar una distancia focal mejor que es multiplicando por 0.87
+## Video de demostración de resultado final:
+
+https://github.com/user-attachments/assets/4bd3f7a6-09ff-45f8-a9dc-8146bcb83fcf
