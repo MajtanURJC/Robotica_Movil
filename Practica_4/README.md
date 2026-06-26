@@ -118,3 +118,5 @@ https://github.com/user-attachments/assets/ca8e2f1a-a0e6-4e23-add4-ed00e44aa3ac
 ## Video demostración de la expanosión:
 
 https://github.com/user-attachments/assets/8c487456-535c-4b82-85bc-d242bf657749
+
+Se puede ver en esta expansión que cuando clicamos en un callejon sin salida, los puntos con menor potencial son los del pasillo en cambio al otro lado del muro podemos ver que tiene mucho potencial a pesar de estar cerca. Esto es debido a que el campo de potencial solo se expande por areas libres y no se expande por areas con obstaculos o prohibidas.
