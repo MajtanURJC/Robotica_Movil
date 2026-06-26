@@ -114,3 +114,7 @@ en cambio, cuanto más nos alejamos del objetivo, más potencial tiene y más bl
 ## Video agregado
 
 https://github.com/user-attachments/assets/ca8e2f1a-a0e6-4e23-add4-ed00e44aa3ac
+
+## Video demostración de la expanosión:
+
+https://github.com/user-attachments/assets/8c487456-535c-4b82-85bc-d242bf657749
