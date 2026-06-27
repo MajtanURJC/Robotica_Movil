@@ -82,7 +82,7 @@ SI se detecta AprilTag:
         aplicar v, w
 
     SI no:
-        v = 0
+        v = 0.05
         w = giro constante
         aplicar v, w
 ```
