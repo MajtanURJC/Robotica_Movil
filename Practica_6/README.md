@@ -112,7 +112,7 @@ Se selecciona un único tag por iteración para:
 - Navegación
 - Estimación de pose global
 
-Criterio de selección: "el tag más cercano a la cámara", garantizando estabilidad y coherencia.
+Criterio de selección: "el tag más cercano a la cámara", garantizando estabilidad y coherencia. Cabe destacar también que esta elección no es fija, sino que si se detecta un nuevo tag más cercano durante el seguimiento de uno, se cambia de objetivo moviendose hacia el nuevo más cercano.
 
 ## Transformaciones y estimación de pose del robot
 
