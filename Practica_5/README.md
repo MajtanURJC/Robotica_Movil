@@ -104,12 +104,21 @@ En cada iteración, el mapa actualizado se muestra en la interfaz:
 WebGUI.setUserMap(user_map)
 ```
 
-# Mapa de Ocupación
+## Mapa de Ocupación
 
 La matriz generada tiene dos tipos de celdas:
 
 * **255 (blanco)** → Zona libre en la que el laser puede pasar sin obstaculos
 * **127 (gris)** → Zona no explorada, ya sea porque hay obstaculo o porque aun no ha pasado.
+
+## Modelo de actualización:
+
+user_map[ey, ex] = min(
+    1.0,
+    user_map[ey, ex] * ratio_obstaculo
+)
+
+Mediante este modelo de actualización permitimos combinar las nuevas percepciones del sensor con las que ya hay en el mapa-
 
 ## Odometría
 
