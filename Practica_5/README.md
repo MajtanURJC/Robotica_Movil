@@ -112,11 +112,12 @@ La matriz generada tiene dos tipos de celdas:
 * **127 (gris)** → Zona no explorada, ya sea porque hay obstaculo o porque aun no ha pasado.
 
 ## Modelo de actualización:
-
+```python
 user_map[ey, ex] = min(
     1.0,
     user_map[ey, ex] * ratio_obstaculo
 )
+```
 
 Mediante este modelo de actualización permitimos combinar las nuevas percepciones del sensor con las que ya hay en el mapa-
 
